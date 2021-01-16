@@ -36,9 +36,37 @@
             font-size: larger;
             font-weight: bold;
         }
+
+        .placar {
+            margin-bottom: 1em;
+        }
+
+        .placar>b {
+            color: white;
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+        }
+
+        .placar>span {
+            font-weight: bold;
+        }
+
+        h3 {
+            margin-bottom: 0px;
+        }
+
     </style>
 </head>
-<body>
+<body onload="reiniciar()">
+
+    <div>
+        <h3>Placar</h3>
+        <div class="placar">
+            <b class="azul">Naruto:</b> <span id="placar_naruto">0</span>
+            <br>
+            <b class="vermelho">Saski:</b> <span id="placar_saski">0</span>
+        </div>
+    </div>
     
     <div class="personagem">
         <img src="naruto-vivo.png" id="foto_naruto">
@@ -52,8 +80,7 @@
     </div>
     
     <div id="div_base">
-        <button onclick="naruto_bate()">Naruto Ataca!</button>
-        <button onclick="saski_bate()">Saski Ataca!</button>
+
     </div>
 
 </body>
@@ -64,20 +91,37 @@
     valor_vida_naruto = 100;
     valor_vida_saski = 100;
 
+    function reiniciar() {
+        valor_vida_naruto = 100;
+        valor_vida_saski = 100;
+        foto_naruto.src = 'naruto-vivo.png';
+        foto_saski.src = 'saski-vivo.jpg';
+        vida_naruto.style.width = '100%';
+        vida_saski.style.width = '100%';
+        div_base.innerHTML = `<button onclick="naruto_bate()">Naruto Ataca!</button>
+        <button onclick="saski_bate()">Saski Ataca!</button>`;
+    }
+
+    function fim_luta() {
+        div_base.innerHTML += `<br> <button onclick="reiniciar()">Nova Batalha!</button>`;
+    }
+
     function forca() {
-        return (Math.random() * 8) + 1;
+        return (Math.random() * 25) + 1;
     }
 
     function morrer(vida, foto, nome_vencedor) {
         vida.style.width = '0%';
         foto.src = foto.src.replace('vivo','morto');
         div_base.innerHTML = `<span>${nome_vencedor} venceu a batalha!</span>`;
+        fim_luta();
+        document.querySelector(`#placar_${nome_vencedor.toLowerCase()}`).innerHTML++;
     }
 
     function naruto_bate() {
         valor_vida_saski -= forca();
         if (valor_vida_saski <= 0) {
-            morrer(vida_saski, foto_saski, 'Naturo');
+            morrer(vida_saski, foto_saski, 'Naruto');
         } else {
             vida_saski.style.width = `${valor_vida_saski}%`;
         }
