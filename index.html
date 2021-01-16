@@ -70,7 +70,7 @@
 
     function morrer(vida, foto, nome_vencedor) {
         vida.style.width = '0%';
-        foto.src = 'saski-morto.jpg';
+        foto.src = foto.src.replace('vivo','morto');
         div_base.innerHTML = `<span>${nome_vencedor} venceu a batalha!</span>`;
     }
 
