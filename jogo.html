@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Naruto do Dudu</title>
+    <style>
+        div.personagem {
+            margin-bottom: 2em;
+        }
+
+        img {
+            height: 12em;
+            width: 10em;
+        }
+
+        .vida {
+            height: 1.5em; width: 100%;
+        }
+
+        .azul {
+            background-color: blue;
+        }
+
+        .vermelho {
+            background-color: red;
+        }
+
+        button {
+            font-size: large;
+            margin-right: 1em;
+        }
+
+        #div_base span {
+            color: blueviolet;
+            font-size: larger;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="personagem">
+        <img src="naruto-vivo.png" id="foto_naruto">
+        <div class="vida azul" id="vida_naruto"></div>
+    </div>
+
+
+    <div class="personagem">
+        <img src="saski-vivo.jpg" id="foto_saski">
+        <div class="vida vermelho" id="vida_saski"></div>
+    </div>
+    
+    <div id="div_base">
+        <button onclick="naruto_bate()">Naruto Ataca!</button>
+        <button onclick="saski_bate()">Saski Ataca!</button>
+    </div>
+
+</body>
+</html>
+
+<script>
+
+    valor_vida_naruto = 100;
+    valor_vida_saski = 100;
+
+    function forca() {
+        return (Math.random() * 8) + 1;
+    }
+
+    function morrer(vida, foto, nome_vencedor) {
+        vida.style.width = '0%';
+        foto.src = 'saski-morto.jpg';
+        div_base.innerHTML = `<span>${nome_vencedor} venceu a batalha!</span>`;
+    }
+
+    function naruto_bate() {
+        valor_vida_saski -= forca();
+        if (valor_vida_saski <= 0) {
+            morrer(vida_saski, foto_saski, 'Naturo');
+        } else {
+            vida_saski.style.width = `${valor_vida_saski}%`;
+        }
+    }
+
+    function saski_bate() {
+        valor_vida_naruto -= forca();
+        if (valor_vida_naruto <= 0) {
+            morrer(vida_naruto, foto_naruto, 'Saski');
+        } else {
+            vida_naruto.style.width = `${valor_vida_naruto}%`;
+        }
+    }    
+
+
+</script>
